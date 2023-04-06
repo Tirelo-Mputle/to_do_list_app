@@ -2,6 +2,7 @@
 const toDoForm = document.querySelector(".to_do_form");
 const toDoListUl = document.querySelector(".to_do_list");
 const toDoInput = document.querySelector(".to_do_input");
+const submitButton = document.querySelector(".to_do_submit_button");
 
 //to do list
 let toDoList = [
@@ -13,6 +14,10 @@ const isEditing = false;
 
 let currentTodo;
 
+if (!isEditing) {
+  submitButton.classList.add("button_add");
+}
+
 const handleEdit = (e) => {
   const newTodolist = toDoList.map((item) => {
     if (item.id === parseFloat(e.target.dataset.id)) {
@@ -23,6 +28,9 @@ const handleEdit = (e) => {
   });
 
   toDoList = newTodolist;
+  const newlistItems = toDoList.map((item) => {
+    console;
+  });
 };
 //get info from input field
 
@@ -49,7 +57,9 @@ const makeLi = () => {
 const handleForm = (e) => {
   e.preventDefault();
   //Add and display list item
-  makeLi();
+  if (isEditing) {
+    makeLi();
+  }
 };
 
 toDoForm.addEventListener("submit", handleForm);
