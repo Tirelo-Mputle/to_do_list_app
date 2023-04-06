@@ -8,6 +8,9 @@ let toDoList = [
   { value: "eggs", id: Math.random() * 1000 },
   { value: "butter", id: Math.random() * 1000 },
 ];
+
+const isEditing = false;
+
 let currentTodo;
 
 const handleEdit = (e) => {
