@@ -37,6 +37,7 @@ li {
 .header {
   margin: 4rem 0 1rem;
 }
+
 /* END OF HEADER */
 
 /* START OF MAIN */
@@ -86,6 +87,16 @@ li {
   border-radius: var(--border0_25);
   display: flex;
   justify-content: space-between;
+}
+/* text_complete_div */
+.text_complete_div {
+  /* background-color: orange; */
+}
+.complete_button {
+  margin-right: 1rem;
+}
+.complete_strike_through {
+  text-decoration: line-through;
 }
 
 /* edit and delete div */

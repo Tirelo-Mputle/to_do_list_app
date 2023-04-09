@@ -3,18 +3,19 @@ const toDoForm = document.querySelector(".to_do_form");
 const toDoListUl = document.querySelector(".to_do_list");
 const toDoInput = document.querySelector(".to_do_input");
 const submitButton = document.querySelector(".submit_button");
+const footer = document.querySelector("footer");
 
 //to do list
-let toDoList = [{ value: "oil", id: 5 }];
+let toDoList = [];
 let isEditing = false;
 let currentTodo;
 let currentEdit;
-toDoInput.value = "eggs";
 
 //prevents page from reloading when form is submitted
 const handleForm = (e) => {
   e.preventDefault();
   //Add and display list item
+  if (toDoInput.value === "") return;
   if (isEditing) {
     ReplaceEdit();
   } else {
@@ -23,17 +24,61 @@ const handleForm = (e) => {
 };
 toDoForm.addEventListener("submit", handleForm);
 
+const listItemData = (itemName, classAdded, todo) => {
+  itemName.classList.add(`${classAdded}`);
+  // itemName.innerText = todo.value;
+  itemName.dataset.id = todo.id;
+};
+const editDeleteData = (itemName, classAdded, todo, text, handler) => {
+  itemName.classList.add(`${classAdded}`);
+  itemName.innerText = `${text}`;
+  itemName.dataset.id = todo.id;
+  itemName.addEventListener("click", handler);
+};
+
+const handleComplete = (e) => {
+  toDoListUl.innerHTML = "";
+  const newTodolist = toDoList.map((item, i) => {
+    if (item.id === parseFloat(e.target.dataset.id)) {
+      item = { ...item, completed: true };
+      console.log(item);
+      return item;
+    } else return item;
+  });
+  toDoList = newTodolist;
+  reRenderList();
+};
+
 const createListItem = (todo) => {
   // create list item
   const toDoItem = document.createElement("li");
-  toDoItem.classList.add("list_item");
-  //Will use this id to edit and delete the item
-  toDoItem.dataset.id = todo.id;
-  toDoItem.innerText = todo.value;
+  listItemData(toDoItem, "list_item", todo);
   //Append the list item to the ul element.
   toDoListUl.appendChild(toDoItem);
-  //Add handleEdit to list items!!!!!!!!!!!!
-  // toDoItem.addEventListener("click", handleEdit);
+
+  // to do text and complete button container
+  const textCompleteDiv = document.createElement("div");
+  textCompleteDiv.classList.add("text_complete_div");
+  toDoItem.appendChild(textCompleteDiv);
+
+  //completed button
+  const completed = document.createElement("button");
+  editDeleteData(
+    completed,
+    "complete_button",
+    todo,
+    "complete",
+    handleComplete
+  );
+  textCompleteDiv.appendChild(completed);
+
+  //to do text
+  const todoText = document.createElement("span");
+  todoText.innerText = todo.value;
+  if (todo.completed) {
+    todoText.classList.add("complete_strike_through");
+  }
+  textCompleteDiv.appendChild(todoText);
 
   //div containing edit and delete buttons
   const editDeleteDiv = document.createElement("div");
@@ -42,17 +87,11 @@ const createListItem = (todo) => {
 
   //edit button
   const editButton = document.createElement("button");
-  editButton.classList.add("edit_button");
-  editButton.innerText = "edit";
-  editButton.dataset.id = todo.id;
-  editButton.addEventListener("click", handleEdit);
+  editDeleteData(editButton, "edit_button", todo, "edit", handleEdit);
   editDeleteDiv.appendChild(editButton);
   //delete button
   const deleteButton = document.createElement("button");
-  deleteButton.classList.add("delete_button");
-  deleteButton.innerText = "delete";
-  deleteButton.dataset.id = todo.id;
-  deleteButton.addEventListener("click", handleDelete);
+  editDeleteData(deleteButton, "delete_button", todo, "delete", handleDelete);
   editDeleteDiv.appendChild(deleteButton);
 
   //clear input field
@@ -61,7 +100,11 @@ const createListItem = (todo) => {
 
 const submitListItem = () => {
   //create currenTodo object
-  currentTodo = { value: toDoInput.value, id: Math.random() * 1000 };
+  currentTodo = {
+    value: toDoInput.value,
+    id: Math.random() * 1000,
+    completed: false,
+  };
   //push currentTodo into toDoList
   toDoList.push(currentTodo);
   createListItem(currentTodo);
@@ -69,46 +112,31 @@ const submitListItem = () => {
 
 const handleEdit = (e) => {
   isEditing = true;
-  console.log(isEditing);
   toggleSubmit();
-  console.log(e.target);
-  console.log(e.target.parentNode.dataset.id);
   const newTodolist = toDoList.map((item, i) => {
     if (item.id === parseFloat(e.target.dataset.id)) {
-      // if (item.id === parseFloat(e.target.dataset.id)) {
       toDoInput.value = item.value;
       currentEdit = toDoList[i];
-      console.log(currentEdit);
       return item;
     } else return item;
   });
-
   toDoList = newTodolist;
-  console.log(toDoList);
 };
 
 const ReplaceEdit = () => {
   toDoListUl.innerHTML = "";
   currentTodo = toDoInput.value;
-  console.log(toDoList);
-  console.log(currentTodo);
-
   const newTodolist = toDoList.map((item, i) => {
     console.log("are they eqyal", item === currentEdit);
     if (item === currentEdit) {
       item = { ...currentEdit, value: currentTodo };
-
       return item;
     } else return item;
   });
-
   toDoList = newTodolist;
-  console.log(toDoList);
   isEditing = false;
   toggleSubmit();
-  console.log(isEditing);
   toDoInput.value = "";
-
   toDoList.map((item) => {
     createListItem(item);
     return item;
@@ -125,46 +153,19 @@ const toggleSubmit = () => {
 };
 
 const handleDelete = (e) => {
-  const removedTheOne = toDoList.filter((item, i) => {
-    console.log(i, item);
-    return item.id !== parseFloat(e.target.dataset.id - 1);
-  });
-
-  toDoList = removedTheOne;
-
-  console.log(removedTheOne, "removeThis");
-  console.log(toDoList, "todolist");
   toDoListUl.innerHTML = "";
+  const newTodolist = toDoList.filter((item, i) => {
+    console.log(i, item);
+    return item.id !== parseFloat(e.target.dataset.id);
+  });
+  toDoList = newTodolist;
   reRenderList();
 };
 
 const reRenderList = () => {
   const renderList = toDoList.map((item) => {
-    const toDoListItem = document.createElement("li");
-    toDoListItem.classList.add("listItem");
-    toDoListItem.dataset.id = item.id;
-    toDoListItem.innerText = item.value;
-    toDoListUl.appendChild(toDoListItem);
-    toDoListItem.addEventListener("click", handleEdit);
-    const deleteBtn = document.createElement("button");
-    deleteBtn.classList.add("delete");
-    deleteBtn.innerText = "delete";
-    deleteBtn.dataset.id = item.id + 1;
-    deleteBtn.addEventListener("click", deleteItem);
-    //Append the list item to the HTML list.
-    toDoListUl.appendChild(deleteBtn);
-    //Add handleEdit to list items
+    createListItem(item);
     return item;
   });
-  return reRenderList;
+  return renderList;
 };
-
-//get info from input field
-submitListItem();
-
-// const deleteBtn = document.createElement("button");
-// deleteBtn.classList.add("delete");
-// deleteBtn.dataset.id = currentTodo.id + 1;
-// deleteBtn.innerText = "delete";
-// toDoListUl.appendChild(deleteBtn);
-// deleteBtn.addEventListener("click", deleteItem);
