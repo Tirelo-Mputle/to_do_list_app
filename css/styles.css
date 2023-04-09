@@ -3,6 +3,8 @@
   --secondary-color: #a5d4de;
   --white: #fff;
   --dark-text: #505050;
+  --delete: rgb(255, 98, 98);
+  --edit: rgb(100, 255, 100);
 
   /* borders */
   --border0_25: 0.25rem;
@@ -74,7 +76,7 @@ li {
 /* end of form */
 
 /* LIST ITEMS */
-.listItem {
+.list_item {
   color: var(--dark-text);
   background-color: var(--white);
   border: 1px solid var(--primary-color);
@@ -82,7 +84,31 @@ li {
   margin: 1rem auto;
   padding: 0.5rem 1rem;
   border-radius: var(--border0_25);
+  display: flex;
+  justify-content: space-between;
 }
+
+/* edit and delete div */
+.edit_delete_div {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1.25rem;
+}
+.delete_button,
+.edit_button {
+  color: var(--white);
+  border-radius: var(--border0_25);
+  padding: 0.25rem 1rem;
+  font-weight: 600;
+  border: none;
+}
+.delete_button {
+  background-color: var(--delete);
+}
+.edit_button {
+  background-color: var(--edit);
+}
+/* END OF LIST ITEM */
 
 .delete {
   background-color: red;

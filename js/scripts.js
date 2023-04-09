@@ -10,6 +10,7 @@ let isEditing = false;
 let currentTodo;
 let currentEdit;
 toDoInput.value = "eggs";
+
 const createLi = () => {
   //create currenTodo object
   currentTodo = { value: toDoInput.value, id: Math.random() * 1000 };
@@ -17,16 +18,31 @@ const createLi = () => {
   toDoList.push(currentTodo);
 
   // create list item
-  const toDoItemText = document.createElement("li");
-  toDoItemText.classList.add("listItem");
+  const toDoItem = document.createElement("li");
+  toDoItem.classList.add("list_item");
   //Will use this id to edit and delete the item
-  toDoItemText.dataset.id = currentTodo.id;
-  toDoItemText.innerText = currentTodo.value;
+  toDoItem.dataset.id = currentTodo.id;
+  toDoItem.innerText = currentTodo.value;
   //Append the list item to the ul element.
-  toDoListUl.appendChild(toDoItemText);
-  //Add handleEdit to list items
-  toDoItemText.addEventListener("click", handleEdit);
+  toDoListUl.appendChild(toDoItem);
+  //Add handleEdit to list items!!!!!!!!!!!!
+  toDoItem.addEventListener("click", handleEdit);
 
+  //div containing edit and delete buttons
+  const editDeleteDiv = document.createElement("div");
+  editDeleteDiv.classList.add("edit_delete_div");
+  toDoItem.appendChild(editDeleteDiv);
+
+  //edit button
+  const editButton = document.createElement("button");
+  editButton.classList.add("edit_button");
+  editButton.innerText = "edit";
+  editDeleteDiv.appendChild(editButton);
+  //delete button
+  const deleteButton = document.createElement("button");
+  deleteButton.classList.add("delete_button");
+  deleteButton.innerText = "delete";
+  editDeleteDiv.appendChild(deleteButton);
   // const deleteBtn = document.createElement("button");
   // deleteBtn.classList.add("delete");
   // deleteBtn.dataset.id = currentTodo.id + 1;
