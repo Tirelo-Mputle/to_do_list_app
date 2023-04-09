@@ -1,3 +1,9 @@
 .button_add {
-  background-color: aquamarine;
+  background-color: rgb(13, 245, 167);
+}
+.button_edit {
+  background-color: rgb(255, 165, 127);
+}
+.delete {
+  background-color: red;
 }
