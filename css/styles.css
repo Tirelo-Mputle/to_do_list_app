@@ -1,9 +1,90 @@
+:root {
+  --primary-color: #72b0bb;
+  --secondary-color: #a5d4de;
+  --white: #fff;
+  --dark-text: #505050;
+
+  /* borders */
+  --border0_25: 0.25rem;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+/* START OF SHARED CODE */
+/* START OF SHARED CODE */
+body {
+  text-align: center;
+  background: linear-gradient(
+    to top,
+    var(--secondary-color),
+    var(--primary-color)
+  );
+  background-repeat: no-repeat;
+  height: 100vh;
+  color: var(--white);
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+}
+li {
+  list-style: none;
+}
+/* START OF HEADER */
+.header {
+  margin: 4rem 0 1rem;
+}
+/* END OF HEADER */
+
+/* START OF MAIN */
+
+/* start of form */
+.to_do_form {
+  margin-bottom: 2.5rem;
+}
+.submit_button,
+.to_do_input {
+  height: 2rem;
+
+  border: 2px solid var(--primary-color);
+  border-radius: var(--border0_25);
+}
+
+.to_do_input {
+  padding: 0.5rem;
+  border: 2px solid var(--primary-color);
+  border-radius: var(--border0_25);
+}
+/* submit button */
+.submit_button {
+  color: var(--white);
+  padding: 0.5rem 1rem;
+  font-weight: 600;
+}
+.submit_button:hover {
+  background-color: var(--secondary-color);
+}
 .button_add {
-  background-color: rgb(13, 245, 167);
+  background-color: var(--primary-color);
 }
 .button_edit {
   background-color: rgb(255, 165, 127);
 }
+/* end of form */
+
+/* LIST ITEMS */
+.listItem {
+  color: var(--dark-text);
+  background-color: var(--white);
+  border: 1px solid var(--primary-color);
+  width: 70%;
+  margin: 1rem auto;
+  padding: 0.5rem 1rem;
+  border-radius: var(--border0_25);
+}
+
 .delete {
   background-color: red;
 }
+/* END OF MAIN */

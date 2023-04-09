@@ -5,10 +5,58 @@ const toDoInput = document.querySelector(".to_do_input");
 const submitButton = document.querySelector(".to_do_submit_button");
 
 //to do list
-let toDoList = [];
+let toDoList = [{ value: "oil", id: 5 }];
 let isEditing = false;
 let currentTodo;
 let currentEdit;
+toDoInput.value = "eggs";
+const createLi = () => {
+  //create currenTodo object
+  currentTodo = { value: toDoInput.value, id: Math.random() * 1000 };
+  //push currentTodo into toDoList
+  toDoList.push(currentTodo);
+
+  // create list item
+  const toDoItemText = document.createElement("li");
+  toDoItemText.classList.add("listItem");
+  //Will use this id to edit and delete the item
+  toDoItemText.dataset.id = currentTodo.id;
+  toDoItemText.innerText = currentTodo.value;
+  //Append the list item to the ul element.
+  toDoListUl.appendChild(toDoItemText);
+  //Add handleEdit to list items
+  toDoItemText.addEventListener("click", handleEdit);
+
+  // const deleteBtn = document.createElement("button");
+  // deleteBtn.classList.add("delete");
+  // deleteBtn.dataset.id = currentTodo.id + 1;
+  // deleteBtn.innerText = "delete";
+  // toDoListUl.appendChild(deleteBtn);
+  // deleteBtn.addEventListener("click", deleteItem);
+};
+
+const makeLi = () => {
+  // currentTodo = { value: toDoInput.value, id: Math.random() * 1000 };
+  // //push currentTodo into toDoList
+  // toDoList.push(currentTodo);
+
+  createLi();
+  //clear input field
+  toDoInput.value = "";
+};
+
+//prevents page from reloading when form is submitted
+const handleForm = (e) => {
+  e.preventDefault();
+  //Add and display list item
+  if (isEditing) {
+    ReplaceEdit();
+  } else {
+    makeLi();
+  }
+};
+
+toDoForm.addEventListener("submit", handleForm);
 
 //Toggle submit color
 const toggleSubmit = () => {
@@ -112,45 +160,4 @@ const ReplaceEdit = () => {
   });
 };
 //get info from input field
-
-const createLi = () => {
-  // create list item
-  const toDoListItem = document.createElement("li");
-  toDoListItem.classList.add("listItem");
-  toDoListItem.dataset.id = currentTodo.id;
-  //Change inner text of li to current value of input field
-  toDoListItem.innerText = currentTodo.value;
-  //Append the list item to the HTML list.
-  toDoListUl.appendChild(toDoListItem);
-  //Add handleEdit to list items
-  toDoListItem.addEventListener("click", handleEdit);
-  const deleteBtn = document.createElement("button");
-  deleteBtn.classList.add("delete");
-  deleteBtn.dataset.id = currentTodo.id + 1;
-  deleteBtn.innerText = "delete";
-  toDoListUl.appendChild(deleteBtn);
-  deleteBtn.addEventListener("click", deleteItem);
-};
-
-const makeLi = () => {
-  currentTodo = { value: toDoInput.value, id: Math.random() * 1000 };
-  //push currentTodo into toDoList
-  toDoList.push(currentTodo);
-
-  createLi();
-  //clear input field
-  toDoInput.value = "";
-};
-
-//prevents page from reloading when form is submitted
-const handleForm = (e) => {
-  e.preventDefault();
-  //Add and display list item
-  if (isEditing) {
-    ReplaceEdit();
-  } else {
-    makeLi();
-  }
-};
-
-toDoForm.addEventListener("submit", handleForm);
+makeLi();
