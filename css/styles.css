@@ -67,11 +67,11 @@ li {
 .submit_button:hover {
   background-color: var(--secondary-color);
 }
-.button_add {
+.submit_add {
   background-color: var(--primary-color);
 }
-.button_edit {
-  background-color: rgb(255, 165, 127);
+.submit_edit {
+  background-color: var(--edit);
 }
 /* end of form */
 
