@@ -46,7 +46,6 @@ const handleComplete = (e) => {
   });
   toDoList = newTodolist;
   reRenderList();
-  console.log("complete handle clicked");
 };
 
 const createListItem = (todo) => {
@@ -68,7 +67,7 @@ const createListItem = (todo) => {
   completed.innerHTML = todo.completed
     ? `<i class="fa-solid fa-square-check" data-id =${todo.id}></i>`
     : `<i class="fa-regular fa-square" data-id =${todo.id}></i>`;
-  console.log(todo);
+
   completed.addEventListener("click", handleComplete);
   textCompleteDiv.appendChild(completed);
 
