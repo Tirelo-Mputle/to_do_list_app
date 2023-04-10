@@ -40,13 +40,13 @@ const handleComplete = (e) => {
   toDoListUl.innerHTML = "";
   const newTodolist = toDoList.map((item, i) => {
     if (item.id === parseFloat(e.target.dataset.id)) {
-      item = { ...item, completed: true };
-      console.log(item);
+      item = { ...item, completed: !item.completed };
       return item;
     } else return item;
   });
   toDoList = newTodolist;
   reRenderList();
+  console.log("complete handle clicked");
 };
 
 const createListItem = (todo) => {
@@ -63,13 +63,13 @@ const createListItem = (todo) => {
 
   //completed button
   const completed = document.createElement("button");
-  editDeleteData(
-    completed,
-    "complete_button",
-    todo,
-    "complete",
-    handleComplete
-  );
+  completed.classList.add("complete_button");
+  completed.dataset.id = todo.id;
+  completed.innerHTML = todo.completed
+    ? `<i class="fa-solid fa-square-check" data-id =${todo.id}></i>`
+    : `<i class="fa-regular fa-square" data-id =${todo.id}></i>`;
+  console.log(todo);
+  completed.addEventListener("click", handleComplete);
   textCompleteDiv.appendChild(completed);
 
   //to do text
@@ -127,7 +127,6 @@ const ReplaceEdit = () => {
   toDoListUl.innerHTML = "";
   currentTodo = toDoInput.value;
   const newTodolist = toDoList.map((item, i) => {
-    console.log("are they eqyal", item === currentEdit);
     if (item === currentEdit) {
       item = { ...currentEdit, value: currentTodo };
       return item;
@@ -143,7 +142,7 @@ const ReplaceEdit = () => {
   });
 };
 
-//Toggle submit color
+//Toggle submit button color
 const toggleSubmit = () => {
   if (isEditing === false) {
     submitButton.classList.remove("submit_edit");
@@ -154,8 +153,10 @@ const toggleSubmit = () => {
 
 const handleDelete = (e) => {
   toDoListUl.innerHTML = "";
+  isEditing = false;
+  toggleSubmit();
+  toDoInput.value = "";
   const newTodolist = toDoList.filter((item, i) => {
-    console.log(i, item);
     return item.id !== parseFloat(e.target.dataset.id);
   });
   toDoList = newTodolist;
