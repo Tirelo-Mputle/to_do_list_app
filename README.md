@@ -1,4 +1,5 @@
 # Javascript Todo list app
+🔗https://todoster.netlify.app/
 Author: Tirelo Mputle <br>
 <br>
 This is a basic todo list app where the user can: <br>
@@ -6,4 +7,9 @@ This is a basic todo list app where the user can: <br>
 * Edit todos
 * Delete todos
 
-🔗https://todoster.netlify.app/
+### Technologies used:
+* HTML
+* CSS
+* JavaScript
+
+
